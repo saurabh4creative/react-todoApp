@@ -62,7 +62,7 @@ function Home() {
                <div className='innerDiv position-relative pt-5'>
                      <div className='container'>
                            <div className='row justify-content-center'>
-                                <div className='col-5'>
+                                <div className='col-xl-5 col-lg-5 col-sm-10 col-md-8 col-12'>
                                       <div className='web-logo text-center'>
                                            <img src='https://getbootstrap.com/docs/5.2/assets/brand/bootstrap-logo.svg' alt='Todo Logo' />
                                       </div>
