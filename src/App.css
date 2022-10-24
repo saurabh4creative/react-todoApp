@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+body{
+   background-color: #f9f9f9;
+   font-family: 'Poppins', sans-serif;
+}
+
+.web-logo img{ max-width: 80px; }
+
+.form-control:active, .form-control:focus{ box-shadow: none; }
+
+.top-form .form-control{
+  padding: 20px 24px; border: none;
+}
+
+.final-res{ border-radius: 10px; overflow: hidden; background-color: #fff; padding: 0 24px;  }
+
+.res-div{
+  padding: 20px 0;
+}
+
+.bg-img{
+  background-image: url('../public/assets/img/bg.jpg'); position: absolute;
+  width: 100%; height: 290px; left: 0; top: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+.top-form button{
+  position: absolute;
+    background: #7311f6;
+    width: 40px;
+    font-size: 20px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    right: 12px;
+    top: 12px;
+    border-radius: 6px;
+    border: none;
+    color: #fff;
+}
+
+.author-name{ color: #000; opacity: 0.5; font-size: 14px; }
+
+.result-sec{ font-size: 14px; }
+
+.res-div + .res-div{ border-top: 1px solid #ddd; }
+
+.res-div .sl-btn{
+  background: transparent;
+    border: none;
+    color: #000;
+    font-size: 20px;
+    padding: 0;
+}
+.res-div .sl-btn{ display: none;}
+.res-div:hover .sl-btn{ display: block;}
+.res-div > div{ min-height: 30px; }
+
+.cursor{ cursor: pointer; }
+
+.Toastify__toast{ font-family: 'Poppins', sans-serif !important; font-size: 14px !important; }
