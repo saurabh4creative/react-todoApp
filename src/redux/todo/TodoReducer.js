@@ -1,4 +1,4 @@
-import { ADD_TODOS, DELETE_TODOS, GET_TODOS, REMOVE_TODOS, ERROR_TODO } from "./TodoTypes";
+import { ADD_TODOS, DELETE_TODOS, GET_TODOS, REMOVE_TODOS, ERROR_TODO, EDIT_TODOS } from "./TodoTypes";
 
 const initialState = {
      list : []
@@ -37,6 +37,24 @@ export const todoReducers = (state = initialState, action) => {
                     ...state,
                     list : action.payload
                }     
+           
+           case EDIT_TODOS :   
+               
+               const id = action.payload.data.id;
+               const text = action.payload.data.data;
+
+               const newEditList = state.list.map(obj => {
+                    if (obj.id === id) {
+                        return {...obj, data: text};
+                    }
+                  
+                    return obj;
+               }); 
+
+               return {
+                    ...state,
+                    list : newEditList
+               };
 
            default : 
                return state 

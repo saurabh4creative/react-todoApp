@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addTodos, getTodos, deleteTodos, removeTodos, getError } from '../redux/todo/TodoActions';
+import { addTodos, getTodos, deleteTodos, removeTodos, getError, editTodos } from '../redux/todo/TodoActions';
 import { ToastContainer, toast  } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -10,6 +10,9 @@ function Home() {
     const dataFetchedRef = useRef(false);
     const todoList = useSelector((state) => state.todoReducers.list); 
     const errorFound = useSelector( (state) => state.errorReducer.error);
+    const [isEdit, setisEdit] = useState(false);
+    const [isEditID, setisEditID] = useState();
+    const [isEditText, setisEditText] = useState();
      
     const submitHandler = e => {
          e.preventDefault(); 
@@ -17,13 +20,31 @@ function Home() {
          
          if( value === '' || !value || value === null ){
               return toast.error('Please Enter the Text...');
+         } 
+         
+         if( isEdit ){ 
+            const postData = {
+                 id : isEditID,
+                 data : value 
+            };
+
+            dispatch( editTodos(postData) ).catch((error)=>{
+                dispatch( getError(error) ); 
+            });
+
+            setisEdit(false);
+            setisEditID();
+            setisEditText();
+
+            toast.success('Todo Edit Successfully...');
          }
-
-         dispatch( addTodos(value) ).catch((error)=>{
-             dispatch( getError(error) ); 
-         });
-
-         toast.success('Todo Added Successfully...');
+         else{
+            dispatch( addTodos(value) ).catch((error)=>{
+                dispatch( getError(error) ); 
+            });
+            toast.success('Todo Added Successfully...');
+         }
+         
          inputValue.current.value = '';
     };
 
@@ -53,7 +74,26 @@ function Home() {
         if( errorFound ){ 
             toast.error(errorFound);
         }  
-    }, [errorFound])
+    }, [errorFound]);
+
+    const editTodo = (id) => {
+        setisEdit(true);
+        setisEditID(id);
+
+        const editText = todoList?.filter((item)=> {
+             if( item.id === id ){
+                  return item;
+             } 
+        }); 
+        
+        setisEditText(editText[0].data);
+    } 
+
+    useEffect(()=>{
+        if( isEditText ){
+            inputValue.current.value = isEditText;
+        }  
+    }, [isEdit, isEditID, isEditText]);
 
     return (
         <>
@@ -72,9 +112,11 @@ function Home() {
                                                  <form onSubmit={submitHandler}>
                                                       <input ref={inputValue} type={'text'} placeholder="Create a Todo" className='form-control' />
                                                       <button type="submit">
-                                                             <i className='fa fa-plus'></i>
+                                                             {
+                                                                 isEdit ? <><i className='fa fa-edit'></i></> : <><i className='fa fa-plus'></i></>
+                                                             }
                                                       </button>
-                                                 </form> 
+                                                 </form>
                                            </div>
                                       </div>
 
@@ -94,9 +136,12 @@ function Home() {
                                                                                 <div>
                                                                                       { data }
                                                                                 </div>
-                                                                                <div>
+                                                                                <div> 
+                                                                                      <button onClick={(e) => editTodo(id)} className='sl-btn'>
+                                                                                            <i className='fa fa-edit'></i>
+                                                                                      </button>
                                                                                       <button onClick={(e) => deleteTodo(id)} className='sl-btn'>
-                                                                                            <i className='fa fa-times'></i>
+                                                                                            <i className='fa fa-trash'></i>
                                                                                       </button>
                                                                                 </div>
                                                                             </div>

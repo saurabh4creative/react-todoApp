@@ -55,8 +55,11 @@ body{
     font-size: 20px;
     padding: 0;
 }
-.res-div .sl-btn{ display: none;}
-.res-div:hover .sl-btn{ display: block;}
+.res-div .sl-btn{ display: none; opacity: 0.3;}
+.res-div:hover .sl-btn{ display: inline-block; }
+
+.sl-btn + .sl-btn{ margin-left: 10px; }
+
 .res-div > div{ min-height: 30px; }
 
 .cursor{ cursor: pointer; }

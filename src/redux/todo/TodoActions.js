@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_URL, ADD_TODOS, GET_TODOS, DELETE_TODOS, REMOVE_TODOS, ERROR_TODO } from "./TodoTypes";
+import { BASE_URL, ADD_TODOS, GET_TODOS, DELETE_TODOS, REMOVE_TODOS, ERROR_TODO, EDIT_TODOS } from "./TodoTypes";
 
 export const addTodos = (data) => {
      return async (dispatch) => {
@@ -49,6 +49,20 @@ export const removeTodos = () => {
           dispatch({
                type : REMOVE_TODOS,
                payload : []
+          }) 
+     }
+}
+
+export const editTodos = (data) => {
+     return async (dispatch) => {
+          const postData = {
+               timeStamp : new Date().getTime().toString(),
+               data : data.data
+          };  
+          const response = await axios.put(`${BASE_URL}/todos/${data.id}`, postData); 
+          dispatch({
+               type : EDIT_TODOS,
+               payload : response
           }) 
      }
 }
