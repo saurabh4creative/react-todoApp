@@ -84,6 +84,7 @@ function Home() {
              if( item.id === id ){
                   return item;
              } 
+             return false
         }); 
         
         setisEditText(editText[0].data);
